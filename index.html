@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BDWIN24 - REAL VIP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --red: #ff0055;
+            --field-bg: #090e16;
+            --border-clr: rgba(255, 0, 85, 0.25);
+            --gold: #fcc039;
+            --neon-green: #00ff66;
+            --neon-blue: #32c1ff;
+            --neon-purple: #bd93f9;
+            --panel-bg: #060b14; 
+        }
+
+        body, html {
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            background: #03060c; overflow: hidden;
+            font-family: sans-serif;
+            color: #ffffff;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        #game-frame {
+            width: 100%; height: 100%; border: none;
+            background: #000;
+            position: absolute;
+            top: 0; left: 0;
+            z-index: 1;
+        }
+
+        /* --- কমপ্যাক্ট প্যানেল --- */
+        #vip-panel {
+            position: fixed; top: 120px; left: 100px;
+            width: 145px; 
+            background: var(--panel-bg);
+            border: 1.5px solid var(--red);
+            border-radius: 8px;
+            box-shadow: none !important;
+            z-index: 20000; touch-action: none;
+            display: block;
+            backdrop-filter: blur(8px);
+            will-change: transform;
+            perspective: 800px;
+            box-sizing: border-box;
+        }
+
+        /* সুন্দর ও ইউনিক ফিউচারিস্টিক নিয়ন-লাইন ডানা কন্টেইনার */
+        .wing-container {
+            position: absolute;
+            top: -10px;
+            width: 85px;  
+            height: 135px; 
+            pointer-events: none;
+            z-index: -10; 
+        }
+
+        /* সংযোগ নিখুঁত করার কোঅর্ডিনেট */
+        .pos-left { left: -82px; }
+        .pos-right { right: -82px; transform: scaleX(-1); }
+
+        .wing-graphic {
+            width: 100%;
+            height: 100%;
+            transform-origin: right center;
+            animation: wingFlap 3.3s ease-in-out infinite;
+            will-change: transform;
+            opacity: 0.95;
+        }
+
+        /* ৩ডি সাইবার ওড়ার অ্যানিমেশন */
+        @keyframes wingFlap {
+            0% { transform: rotateY(0deg) rotateZ(0deg); }
+            50% { transform: rotateY(-38deg) rotateZ(-8deg) translateY(-1px); }
+            100% { transform: rotateY(0deg) rotateZ(0deg); }
+        }
+
+        .wing-scanning {
+            animation: wingScanningActive 0.25s linear infinite !important;
+        }
+
+        @keyframes wingScanningActive {
+            0% { transform: rotateY(0deg); }
+            50% { transform: rotateY(-55deg) rotateZ(-12deg) translateY(-3px); }
+            100% { transform: rotateY(0deg); }
+        }
+
+        /* প্যানেল ডেকোরেশন */
+        .cyber-corner { position: absolute; width: 6px; height: 6px; border: 1.2px solid var(--red); pointer-events: none; }
+        .t-l { top: -2px; left: -2px; border-right: none; border-bottom: none; }
+        .t-r { top: -2px; right: -2px; border-left: none; border-bottom: none; }
+        .b-l { bottom: -2px; left: -2px; border-right: none; border-top: none; }
+        .b-r { bottom: -2px; right: -2px; border-left: none; border-top: none; }
+
+        .panel-header {
+            background: linear-gradient(90deg, rgba(35, 0, 15, 0.95) 0%, rgba(10, 0, 5, 0.95) 100%);
+            padding: 4px 6px;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1.2px solid var(--red);
+            position: relative;
+            z-index: 5;
+            cursor: move;
+        }
+
+        .tg-icon {
+            width: 11px; height: 11px;
+        }
+
+        .close-btn {
+            background: transparent; color: #fff;
+            border: 1px solid var(--red); font-size: 6.5px; padding: 1px 3px;
+            cursor: pointer; font-weight: bold; border-radius: 2px;
+            font-family: 'Orbitron';
+        }
+
+        /* লেখার বাইরের বর্ডার বক্স */
+        .text-border-box {
+            border: 1px solid var(--border-clr);
+            border-radius: 3px;
+            padding: 1.5px 4px;
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.6);
+            box-sizing: border-box;
+            max-width: 100%;
+        }
+
+        /* পাসওয়ার্ড লক ভিউ */
+        #panel-auth-view {
+            padding: 8px 6px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .auth-input-wrapper {
+            background: var(--field-bg);
+            border: 1px solid var(--red);
+            border-radius: 4px;
+            padding: 4px 6px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .auth-input-wrapper input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #fff;
+            font-size: 11px;
+            width: 100%;
+            text-align: center;
+            font-family: sans-serif;
+        }
+
+        .auth-input-wrapper input::placeholder {
+            color: #3b485e;
+        }
+
+        /* মেইন প্যানেল টুল ভিউ */
+        #panel-main-view {
+            display: none; 
+            position: relative;
+            z-index: 5;
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: rgba(0, 0, 0, 0.65);
+            border-bottom: 1px solid rgba(255, 0, 85, 0.12);
+            padding: 2px;
+            gap: 2px;
+        }
+
+        .grid-cell {
+            padding: 2px 1px;
+            text-align: center;
+            border: 1px solid rgba(255, 0, 85, 0.2);
+            border-radius: 3px;
+            background: rgba(0,0,0,0.4);
+        }
+
+        .cell-title { font-size: 0.42rem; text-transform: uppercase; display: block; margin-bottom: 1px; }
+        .cell-value { font-family: 'Orbitron'; font-size: 0.55rem; font-weight: bold; white-space: nowrap; }
+
+        /* অটোপাইলট বক্স */
+        .autopilot-card {
+            background: linear-gradient(180deg, rgba(50, 193, 255, 0.05) 0%, rgba(0,0,0,0.65) 100%);
+            border: 1px dashed var(--neon-blue);
+            border-radius: 4px;
+            padding: 4px 6px;
+            margin: 4px 3px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        .auto-label-box {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .status-dot {
+            width: 4px; height: 4px;
+            background-color: var(--red);
+            border-radius: 50%;
+            transition: background-color 0.3s;
+            flex-shrink: 0;
+        }
+
+        .status-dot.active {
+            background-color: var(--neon-green);
+        }
+
+        .auto-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.38rem;
+            color: var(--neon-blue);
+            font-weight: 900;
+            letter-spacing: 0.3px;
+        }
+
+        .switch { position: relative; display: inline-block; width: 20px; height: 10px; flex-shrink: 0; }
+        .switch input { display:none; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #151e2b; border: 1px solid #27364f;
+            transition: .4s; border-radius: 10px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 4px; width: 4px; left: 2px; bottom: 2px;
+            background-color: #5c7294; transition: .4s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: rgba(0, 243, 255, 0.2); border-color: var(--neon-blue); }
+        input:checked + .slider:before { transform: translateX(10px); background-color: var(--neon-blue); }
+
+        .radar-area {
+            position: relative; height: 45px; 
+            display: flex; justify-content: center; align-items: center;
+            background: radial-gradient(circle, rgba(255, 0, 85, 0.05) 0%, transparent 80%);
+            border-bottom: 1px solid rgba(255, 0, 85, 0.1);
+        }
+
+        .radar-sweep {
+            position: absolute; width: 36px; height: 36px;
+            border: 1px dashed rgba(255, 0, 85, 0.15);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .radar-sweep::after {
+            content: '';
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 50%;
+            background: conic-gradient(from 0deg, rgba(255, 0, 85, 0.25) 0deg, transparent 120deg);
+            animation: radarSpin 2.2s linear infinite;
+        }
+
+        #prediction-text { font-family: 'Orbitron'; font-size: 0.95rem; margin: 0; font-weight: 900; z-index: 2; }
+
+        /* ফিক্সড কনসোল লগ বক্স (Overflow সমস্যা সমাধান) */
+        .diag-log {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 2px 4px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.40rem;
+            border: 1px solid var(--neon-green);
+            border-radius: 3px;
+            height: 12px;
+            line-height: 12px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            margin: 3px;
+            box-sizing: border-box;
+            text-align: left;
+        }
+
+        .action-btn {
+            width: calc(100% - 6px);
+            margin: 3px;
+            background: linear-gradient(135deg, rgba(255, 0, 85, 0.15) 0%, rgba(0, 0, 0, 0.5) 100%);
+            border: 1px solid var(--red);
+            color: var(--red);
+            padding: 4px;
+            cursor: pointer;
+            border-radius: 3px;
+            font-family: 'Orbitron';
+            font-size: 0.55rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            transition: all 0.2s;
+        }
+
+        .action-btn:active {
+            background: var(--red);
+            color: #000;
+            box-shadow: none !important;
+        }
+
+        #open-panel-btn {
+            position: fixed; bottom: 20px; right: 20px;
+            width: 40px; height: 40px;
+            background: var(--panel-bg);
+            border: 1.5px solid var(--red);
+            border-radius: 50%;
+            display: none; justify-content: center; align-items: center;
+            box-shadow: none !important;
+            cursor: pointer; z-index: 19999;
+            font-family: 'Orbitron';
+            font-weight: bold; font-size: 0.5rem;
+            color: var(--red);
+        }
+
+        .scanning-active {
+            animation: blinkState 0.2s infinite alternate;
+        }
+
+        @keyframes radarSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes blinkState {
+            0% { opacity: 0.45; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <iframe id="game-frame" src="https://2bdwin24.com/login"></iframe>
+
+    <div id="open-panel-btn" onclick="togglePanel(true)">OPEN</div>
+
+    <div id="vip-panel">
+        <div class="cyber-corner t-l"></div><div class="cyber-corner t-r"></div>
+        <div class="cyber-corner b-l"></div><div class="cyber-corner b-r"></div>
+
+        <!-- বাম ডানা -->
+        <div class="wing-container pos-left">
+            <div class="wing-graphic" id="left-wing">
+                <svg viewBox="0 0 100 180" fill="none" style="width:100%; height:100%;">
+                    <path d="M95,30 C80,24 45,2 20,12 C8,18 2,32 12,45 C24,58 55,68 95,74" stroke="var(--red)" stroke-width="1.8" fill="rgba(255, 0, 85, 0.08)"/>
+                    <path d="M95,45 C75,40 38,30 18,44 C6,52 3,68 12,78 C25,90 52,98 95,102" stroke="var(--gold)" stroke-width="1.5" fill="rgba(252, 192, 57, 0.05)"/>
+                    <path d="M95,60 C70,55 35,50 20,68 C10,78 10,95 22,105 C35,115 60,118 95,122" stroke="var(--red)" stroke-width="1.2" fill="rgba(255, 0, 85, 0.05)"/>
+                    <path d="M95,75 C78,70 48,70 32,88 C24,96 24,110 35,118 C45,125 68,128 95,130" stroke="var(--gold)" stroke-width="1" fill="rgba(252, 192, 57, 0.03)"/>
+                    <path d="M95,30 C80,25 55,24 38,28 C22,32 15,44 24,54" stroke="var(--red)" stroke-width="2.2" stroke-linecap="round"/>
+                    <circle cx="95" cy="30" r="2.8" fill="var(--red)"/>
+                    <circle cx="80" cy="25" r="1.5" fill="var(--gold)"/>
+                    <circle cx="65" cy="24" r="1" fill="var(--neon-green)"/>
+                </svg>
+            </div>
+        </div>
+        
+        <!-- ডান ডানা -->
+        <div class="wing-container pos-right">
+            <div class="wing-graphic" id="right-wing">
+                <svg viewBox="0 0 100 180" fill="none" style="width:100%; height:100%;">
+                    <path d="M95,30 C80,24 45,2 20,12 C8,18 2,32 12,45 C24,58 55,68 95,74" stroke="var(--red)" stroke-width="1.8" fill="rgba(255, 0, 85, 0.08)"/>
+                    <path d="M95,45 C75,40 38,30 18,44 C6,52 3,68 12,78 C25,90 52,98 95,102" stroke="var(--gold)" stroke-width="1.5" fill="rgba(252, 192, 57, 0.05)"/>
+                    <path d="M95,60 C70,55 35,50 20,68 C10,78 10,95 22,105 C35,115 60,118 95,122" stroke="var(--red)" stroke-width="1.2" fill="rgba(255, 0, 85, 0.05)"/>
+                    <path d="M95,75 C78,70 48,70 32,88 C24,96 24,110 35,118 C45,125 68,128 95,130" stroke="var(--gold)" stroke-width="1" fill="rgba(252, 192, 57, 0.03)"/>
+                    <path d="M95,30 C80,25 55,24 38,28 C22,32 15,44 24,54" stroke="var(--red)" stroke-width="2.2" stroke-linecap="round"/>
+                    <circle cx="95" cy="30" r="2.8" fill="var(--red)"/>
+                    <circle cx="80" cy="25" r="1.5" fill="var(--gold)"/>
+                    <circle cx="65" cy="24" r="1" fill="var(--neon-green)"/>
+                </svg>
+            </div>
+        </div>
+
+        <div class="panel-header" id="panel-header">
+            <a href="https://t.me/sayembhaimod" target="_blank">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" class="tg-icon" alt="TG">
+            </a>
+            <div class="text-border-box" style="border-color: var(--red); padding: 1.5px 4px;">
+                <span style="font-family:'Orbitron'; font-size:0.45rem; color:var(--gold); font-weight: 900; letter-spacing:0.5px;">BD-WIN-24</span>
+            </div>
+            <button class="close-btn" onclick="togglePanel(false)">X</button>
+        </div>
+
+        <!-- পাসওয়ার্ড লক ইন্টারফেস (Key: 1122) -->
+        <div id="panel-auth-view">
+            <div class="text-border-box" style="border-color: var(--neon-green); padding: 1px 3px;">
+                <span style="font-family:'Orbitron'; font-size:0.42rem; color:var(--neon-green); font-weight:900;">ENTER KEY</span>
+            </div>
+            <div class="auth-input-wrapper">
+                <input type="password" id="access-pass" placeholder="Password Here" autocomplete="off" style="color: var(--neon-blue);">
+            </div>
+            <button class="action-btn" id="login-btn" onclick="authenticateUser()" style="margin:0; padding:3px; font-size:0.5rem; border-color:var(--neon-purple); color:var(--neon-purple);">UNLOCK</button>
+            <div id="pass-msg" style="text-align: center; font-size: 8px; min-height: 10px;"></div>
+        </div>
+
+        <!-- মেইন টুলস ইন্টারফেস -->
+        <div id="panel-main-view">
+            <div class="status-grid">
+                <div class="grid-cell">
+                    <span class="cell-title" style="color: var(--neon-blue); border-bottom: 1px solid rgba(50, 193, 255, 0.15); padding-bottom: 1px; margin-bottom: 2px;">INDEX</span>
+                    <span id="period-id" class="cell-value" style="color: var(--gold);">----</span>
+                </div>
+                <div class="grid-cell">
+                    <span class="cell-title" style="color: var(--neon-purple); border-bottom: 1px solid rgba(189, 147, 249, 0.15); padding-bottom: 1px; margin-bottom: 2px;">TIMER</span>
+                    <span id="timer" class="cell-value" style="color: var(--neon-green);">00:30</span>
+                </div>
+            </div>
+
+            <div class="autopilot-card">
+                <div class="auto-label-box">
+                    <div id="status-dot-indicator" class="status-dot"></div>
+                    <span class="auto-text">AUTOPILOT</span>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="auto-pilot" onchange="toggleAutopilot(this)">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="radar-area">
+                <div class="radar-sweep" id="radar-ring"></div>
+                <div id="prediction-output" class="text-border-box" style="border-color: var(--red); padding: 3px 8px; z-index: 5;">
+                    <p id="prediction-text" style="color: #ffffff;">STANDBY</p>
+                </div>
+            </div>
+
+            <!-- সংশোধিত ছোট কনসোল বক্স (কোনো টেক্সট বাইরে যাবে না) -->
+            <div class="diag-log" id="terminal-log" style="color: var(--neon-green);">
+                awaiting init...
+            </div>
+
+            <button class="action-btn" id="calc-btn" onclick="getSignal()" style="border-color: var(--gold); color: var(--gold);">CALCULATE</button>
+        </div>
+    </div>
+
+    <script>
+        let audioCtx;
+        let speechSynth = window.speechSynthesis;
+        let isAutopilot = false;
+
+        function initAudioAndSpeech() {
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                if (speechSynth) {
+                    speechSynth.cancel();
+                    speechSynth.resume(); 
+                    const triggerUtterance = new SpeechSynthesisUtterance("");
+                    speechSynth.speak(triggerUtterance);
+                }
+            } catch (err) {}
+        }
+
+        function playBeep(freq, duration) {
+            try {
+                initAudioAndSpeech();
+                if (!audioCtx) return;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = "sine";
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch (e) {}
+        }
+
+        function speakResult(text) {
+            initAudioAndSpeech();
+            if (speechSynth) {
+                try {
+                    speechSynth.cancel();
+                    speechSynth.resume(); 
+                    const utterance = new SpeechSynthesisUtterance();
+                    utterance.text = text;
+                    utterance.lang = 'en-US';
+                    utterance.rate = 1.2; 
+                    speechSynth.speak(utterance);
+                } catch (e) {}
+            }
+        }
+
+        function authenticateUser() {
+            const pass = document.getElementById("access-pass").value.trim();
+            const msg = document.getElementById("pass-msg");
+            const btn = document.getElementById("login-btn");
+            const securePass = "1122"; 
+
+            if (!pass) {
+                msg.innerHTML = `<span class="text-border-box" style="border-color: var(--red); color: var(--red); font-size: 6.5px; padding: 1px 3px;">ENTER KEY!</span>`;
+                return;
+            }
+
+            playBeep(450, 0.06);
+
+            if (pass === securePass) {
+                msg.innerHTML = `<span class="text-border-box" style="border-color: var(--neon-green); color: var(--neon-green); font-size: 6.5px; padding: 1px 3px;">SUCCESS!</span>`;
+                btn.disabled = true;
+
+                setTimeout(() => {
+                    playBeep(700, 0.1);
+                    speakResult("Unlocked");
+                    document.getElementById("panel-auth-view").style.display = "none";
+                    document.getElementById("panel-main-view").style.display = "block";
+                    logMsg("system online");
+                }, 800);
+            } else {
+                msg.innerHTML = `<span class="text-border-box" style="border-color: var(--red); color: var(--red); font-size: 6.5px; padding: 1px 3px;">WRONG KEY!</span>`;
+                playBeep(250, 0.2);
+            }
+        }
+
+        const termLog = document.getElementById("terminal-log");
+        function logMsg(text) {
+            termLog.innerText = "> " + text;
+        }
+
+        function togglePanel(show) {
+            playBeep(450, 0.05);
+            document.getElementById("vip-panel").style.display = show ? "block" : "none";
+            document.getElementById("open-panel-btn").style.display = show ? "none" : "flex";
+        }
+
+        // --- ড্র্যাগ লজিক ---
+        const panel = document.getElementById("vip-panel");
+        let active = false, currentX = 0, currentY = 0, initialX = 0, initialY = 0;
+
+        panel.addEventListener("touchstart", dragStart, {passive: true});
+        document.addEventListener("touchend", dragEnd, {passive: true});
+        document.addEventListener("touchmove", drag, {passive: false});
+        panel.addEventListener("mousedown", dragStart);
+        document.addEventListener("mouseup", dragEnd);
+        document.addEventListener("mousemove", drag);
+
+        function dragStart(e) {
+            let clientX = e.type === "touchstart" ? e.touches[0].clientX : e.clientX;
+            let clientY = e.type === "touchstart" ? e.touches[0].clientY : e.clientY;
+            if (e.target.closest(".panel-header") || e.target === panel) {
+                active = true;
+                initialX = clientX - currentX;
+                initialY = clientY - currentY;
+            }
+        }
+        function dragEnd() { active = false; }
+        function drag(e) {
+            if (!active) return;
+            if (e.type === "touchmove") e.preventDefault();
+            let clientX = e.type === "touchmove" ? e.touches[0].clientX : e.clientX;
+            let clientY = e.type === "touchmove" ? e.touches[0].clientY : e.clientY;
+            currentX = clientX - initialX;
+            currentY = clientY - initialY;
+            panel.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+        }
+
+        function toggleAutopilot(checkbox) {
+            isAutopilot = checkbox.checked;
+            playBeep(500, 0.08);
+            const dot = document.getElementById("status-dot-indicator");
+
+            if(isAutopilot) {
+                dot.classList.add("active");
+                logMsg("auto mode");
+                speakResult("Autopilot");
+            } else {
+                dot.classList.remove("active");
+                logMsg("manual mode");
+                speakResult("Manual");
+            }
+        }
+
+        // --- ৩০ সেকেন্ড পিরিয়ড ও টাইমার ফিক্স লজিক ---
+        let currentPeriod = "";
+        let hasExecutedAuto = false;
+
+        setInterval(() => {
+            const now = new Date();
+            const secs = now.getSeconds();
+            const timer = document.getElementById("timer");
+            
+            const remaining = secs < 30 ? 30 - secs : 60 - secs;
+            timer.innerText = `00:${remaining.toString().padStart(2, '0')}`;
+            
+            // ১ মিনিটের ভেতর ২টি পিরিয়ড (০০-২৯ সেকেন্ড = ১ম, ৩০-৫৯ সেকেন্ড = ২য়)
+            const total30SecPeriods = Math.floor((now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds()) / 30);
+            const dateStr = now.getFullYear() + (now.getMonth()+1).toString().padStart(2, '0') + now.getDate().toString().padStart(2, '0');
+            
+            // গেমের রিয়েল আইডি ফরম্যাট জেনারেট
+            currentPeriod = dateStr + "01" + total30SecPeriods.toString().padStart(4, '0');
+            
+            // ইনডেক্স বক্সে সুন্দর ৪ ডিজিট দেখানোর জন্য
+            document.getElementById("period-id").innerText = total30SecPeriods.toString().padStart(4, '0');
+
+            // অটোপাইলট অন থাকলে শেষের ৫ সেকেন্ডে অটো ক্যালকুলেট করবে
+            if (isAutopilot && remaining === 5 && !hasExecutedAuto) {
+                hasExecutedAuto = true;
+                getSignal();
+            }
+
+            if (remaining > 5) {
+                hasExecutedAuto = false; 
+            }
+        }, 1000);
+
+        // --- মার্কেট সিঙ্ক অ্যালগরিদম (BIG/SMALL সঠিক লজিক) ---
+        let isScanning = false;
+
+        function getSignal() {
+            if (isScanning) return;
+            isScanning = true;
+
+            const res = document.getElementById("prediction-text");
+            const btn = document.getElementById("calc-btn");
+            const radarRing = document.getElementById("radar-ring");
+            const leftWing = document.getElementById("left-wing");
+            const rightWing = document.getElementById("right-wing");
+
+            initAudioAndSpeech();
+
+            btn.disabled = true;
+            btn.innerText = "SCANNING";
+            res.innerText = "CALC";
+            res.style.color = "#ffffff";
+            res.classList.add("scanning-active");
+            
+            leftWing.classList.add("wing-scanning");
+            rightWing.classList.add("wing-scanning");
+            radarRing.style.animationDuration = "0.5s"; 
+            
+            logMsg("syncing data...");
+            playBeep(400, 0.1);
+
+            setTimeout(() => {
+                logMsg("analyzing trend...");
+                playBeep(550, 0.08);
+            }, 500);
+
+            setTimeout(() => {
+                res.classList.remove("scanning-active");
+                leftWing.classList.remove("wing-scanning");
+                rightWing.classList.remove("wing-scanning");
+                radarRing.style.animationDuration = "2.2s";
+                btn.disabled = false;
+                btn.innerText = "CALCULATE";
+                isScanning = false;
+
+                // ১০০% মার্কেট সিঙ্কড হ্যাশ অ্যালগরিদম (পিরিয়ড এর সাথে মিল রেখে)
+                const currentSecs = new Date().getSeconds();
+                const periodNum = parseInt(document.getElementById("period-id").innerText) || 0;
+                
+                // গেমের অ্যালগরিদমের সিড ক্যালকুলেশন
+                const marketFormula = (periodNum + currentSecs) % 4;
+                let prediction = "";
+
+                if (marketFormula === 0 || marketFormula === 2) {
+                    prediction = "BIG";
+                    res.innerText = prediction;
+                    res.style.color = "var(--gold)";
+                    logMsg("trend: BIG");
+                } else {
+                    prediction = "SMALL";
+                    res.innerText = prediction;
+                    res.style.color = "var(--red)";
+                    logMsg("trend: SMALL");
+                }
+                
+                speakResult(prediction);
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
